@@ -8,7 +8,7 @@
 		<version>3.1.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>site.easy.to.build</groupId>
+    <groupId>site.easy.to.build</groupId>
 	<artifactId>crm</artifactId>
 	<version>0</version>
 	<name>crm</name>
