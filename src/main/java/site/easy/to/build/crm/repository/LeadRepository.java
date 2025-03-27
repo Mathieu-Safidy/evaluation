@@ -31,4 +31,8 @@ public interface LeadRepository extends JpaRepository<Lead, Integer> {
     long countByCustomerCustomerId(int customerId);
 
     void deleteAllByCustomer(Customer customer);
+
+    public void deleteAll();
+
+    List<Lead> findByDepensesDepensesIdNotIn(List<Integer> depenseIds);
 }

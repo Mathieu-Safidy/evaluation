@@ -120,6 +120,12 @@
                                 <div class="form-group">
                                     <div class="dropzone" id="my-dropzone"></div>
                                 </div>
+                                <label class="m-t-20" for="depensesid">Assign Depenses :</label>
+                                <div class="input-group">
+                                    <select th:field="*{depenses}" name="depensesId" id="depensesid" class="form-control">
+                                        <option th:each="depens : ${depenses}" th:text="${depens.libele}" th:value="${depens.depensesId}"></option>
+                                    </select>
+                                </div>
                                 <div th:if="${hasGoogleDriveAccess}" class="col-md-5 m-b-15 custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input trigger-emails" th:id="googleDrive" th:field="*{googleDrive}">
                                     <label th:for="googleDrive" class="custom-control-label">Upload Docs to your Google Drive</label>
