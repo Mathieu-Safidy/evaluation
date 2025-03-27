@@ -9,7 +9,6 @@ import jakarta.validation.groups.Default;
 import site.easy.to.build.crm.customValidations.customer.UniqueEmail;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "customer")
@@ -65,7 +64,6 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable=false)
     @JsonIgnoreProperties("customer")
-    @JsonIgnore
     private User user;
 
     @OneToOne
@@ -75,15 +73,6 @@ public class Customer {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
-    @OneToMany(mappedBy = "customerId" , cascade = CascadeType.ALL)
-    private List<Budget> budgets;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "customerId", cascade = CascadeType.ALL)
-    private List<Depenses> depenses;
-
-
 
     public Customer() {
     }
@@ -236,44 +225,7 @@ public class Customer {
         this.createdAt = createdAt;
     }
 
-    public List<Budget> getBudgets() {
-        return budgets;
-    }
-
-    public void setBudgets(List<Budget> budgets) {
-        this.budgets = budgets;
-    }
-
-    public List<Depenses> getDepenses() {
-        return depenses;
-    }
-
-    public void setDepenses(List<Depenses> depenses) {
-        this.depenses = depenses;
-    }
-    public double getSommeDepenses() {
-        double somme = 0;
-        for (Depenses depens : depenses) {
-            somme += depens.getMontant();
-        }
-        return somme;
-    }
-    public double getSommeBudget() {
-        double somme = 0;
-        for (Budget budget : budgets) {
-            somme += budget.getMontant();
-        }
-        return somme;
-    }
-    public double getSommeRestant() {
-        double expens = this.getSommeDepenses();
-        double budget = this.getSommeBudget();
-        return (budget-expens);
-    }
-
-
-
-    //    public List<Ticket> getTickets() {
+//    public List<Ticket> getTickets() {
 //        return tickets;
 //    }
 //

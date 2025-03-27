@@ -11,17 +11,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import site.easy.to.build.crm.entity.*;
+import site.easy.to.build.crm.entity.Customer;
+import site.easy.to.build.crm.entity.CustomerLoginInfo;
+import site.easy.to.build.crm.entity.OAuthUser;
+import site.easy.to.build.crm.entity.User;
 import site.easy.to.build.crm.google.service.acess.GoogleAccessService;
 import site.easy.to.build.crm.google.service.gmail.GoogleGmailApiService;
 import site.easy.to.build.crm.service.contract.ContractService;
 import site.easy.to.build.crm.service.customer.CustomerLoginInfoService;
 import site.easy.to.build.crm.service.customer.CustomerService;
-import site.easy.to.build.crm.service.customer.CustomerServiceImpl;
 import site.easy.to.build.crm.service.lead.LeadService;
-import site.easy.to.build.crm.service.lead.LeadServiceImpl;
 import site.easy.to.build.crm.service.ticket.TicketService;
-import site.easy.to.build.crm.service.ticket.TicketServiceImpl;
 import site.easy.to.build.crm.service.user.UserService;
 import site.easy.to.build.crm.util.AuthenticationUtils;
 import site.easy.to.build.crm.util.AuthorizationUtil;
@@ -43,14 +43,11 @@ public class CustomerController {
     private final TicketService ticketService;
     private final ContractService contractService;
     private final LeadService leadService;
-    private final LeadServiceImpl leadServiceImpl;
-    private final CustomerServiceImpl customerServiceImpl;
-//    private final TicketServiceImpl ticketServiceImpl;
 
     @Autowired
     public CustomerController(CustomerService customerService, UserService userService, CustomerLoginInfoService customerLoginInfoService,
                               AuthenticationUtils authenticationUtils, GoogleGmailApiService googleGmailApiService, Environment environment,
-                              TicketService ticketService, ContractService contractService, LeadService leadService, LeadServiceImpl leadServiceImpl, TicketServiceImpl ticketServiceImpl, CustomerServiceImpl customerServiceImpl) {
+                              TicketService ticketService, ContractService contractService, LeadService leadService) {
         this.customerService = customerService;
         this.userService = userService;
         this.customerLoginInfoService = customerLoginInfoService;
@@ -60,8 +57,6 @@ public class CustomerController {
         this.ticketService = ticketService;
         this.contractService = contractService;
         this.leadService = leadService;
-        this.leadServiceImpl = leadServiceImpl;
-        this.customerServiceImpl = customerServiceImpl;
     }
 
     @GetMapping("/manager/all-customers")
@@ -131,21 +126,6 @@ public class CustomerController {
         model.addAttribute("hasGoogleGmailAccess", hasGoogleGmailAccess);
 
         return "customer/create-customer";
-    }
-
-    @GetMapping("/duplicate/{id}")
-    public String duplicateCustomer(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
-        Customer customer = customerService.findByCustomerId(id);
-        try {
-            String pathlink = "D:\\cour\\eval\\1\\newApp\\exporte.json";
-            customerServiceImpl.duplicate(customer,pathlink);
-            redirectAttributes.addFlashAttribute("success","Exportation reussi");
-        } catch (Exception e){
-            redirectAttributes.addFlashAttribute("error","Une erreur s'est produit lors de l'exportation");
-            e.printStackTrace();
-        }
-
-        return "redirect:/employee/customer/manager/all-customers";
     }
 
     @PostMapping("/create-customer")
