@@ -1,10 +1,8 @@
 package site.easy.to.build.crm.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,7 +13,7 @@ public class Lead {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lead_id")
-    private Integer leadId;
+    private int leadId;
 
     @Column(name = "name")
     @NotBlank(message = "Name is required")
@@ -35,28 +33,22 @@ public class Lead {
     @Column(name = "google_drive")
     private Boolean googleDrive;
 
-    @JsonIgnore
     @Column(name = "google_drive_folder_id")
     private String googleDriveFolderId;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "lead", cascade = CascadeType.ALL)
     private List<LeadAction> leadActions;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "lead", cascade = CascadeType.ALL)
     private List<File> files;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "lead", cascade = CascadeType.ALL)
     private List<GoogleDriveFile> googleDriveFiles;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User manager;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private User employee;
@@ -64,10 +56,6 @@ public class Lead {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
-
-    @ManyToOne
-    @JoinColumn(name = "depenses_id")
-    private Depenses depenses;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -97,7 +85,7 @@ public class Lead {
         return leadId;
     }
 
-    public void setLeadId(Integer leadId) {
+    public void setLeadId(int leadId) {
         this.leadId = leadId;
     }
 
@@ -151,14 +139,6 @@ public class Lead {
 
     public List<LeadAction> getLeadActions() {
         return leadActions;
-    }
-
-    public Depenses getDepenses() {
-        return depenses;
-    }
-
-    public void setDepenses(Depenses depenses) {
-        this.depenses = depenses;
     }
 
     public void addLeadAction(LeadAction leadAction) {
@@ -237,8 +217,6 @@ public class Lead {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
-
 }
 
 

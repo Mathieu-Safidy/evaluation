@@ -26,12 +26,10 @@ import site.easy.to.build.crm.google.service.calendar.GoogleCalendarApiService;
 import site.easy.to.build.crm.google.service.drive.GoogleDriveApiService;
 import site.easy.to.build.crm.google.service.gmail.GoogleGmailApiService;
 import site.easy.to.build.crm.service.customer.CustomerService;
-import site.easy.to.build.crm.service.depenses.DepensesServiceImpl;
 import site.easy.to.build.crm.service.drive.GoogleDriveFileService;
 import site.easy.to.build.crm.service.file.FileService;
 import site.easy.to.build.crm.service.lead.LeadActionService;
 import site.easy.to.build.crm.service.lead.LeadService;
-import site.easy.to.build.crm.service.lead.LeadServiceImpl;
 import site.easy.to.build.crm.service.settings.LeadEmailSettingsService;
 import site.easy.to.build.crm.service.user.UserService;
 import site.easy.to.build.crm.util.*;
@@ -62,14 +60,12 @@ public class LeadController {
     private final LeadEmailSettingsService leadEmailSettingsService;
     private final GoogleGmailApiService googleGmailApiService;
     private final EntityManager entityManager;
-    private final LeadServiceImpl leadServiceImpl;
-    private final DepensesServiceImpl depensesServiceImpl;
 
     @Autowired
     public LeadController(LeadService leadService, AuthenticationUtils authenticationUtils, UserService userService, CustomerService customerService,
                           LeadActionService leadActionService, GoogleCalendarApiService googleCalendarApiService, FileService fileService,
                           GoogleDriveApiService googleDriveApiService, GoogleDriveFileService googleDriveFileService, FileUtil fileUtil,
-                          LeadEmailSettingsService leadEmailSettingsService, GoogleGmailApiService googleGmailApiService, EntityManager entityManager, LeadServiceImpl leadServiceImpl, DepensesServiceImpl depensesServiceImpl) {
+                          LeadEmailSettingsService leadEmailSettingsService, GoogleGmailApiService googleGmailApiService, EntityManager entityManager) {
         this.leadService = leadService;
         this.authenticationUtils = authenticationUtils;
         this.userService = userService;
@@ -83,8 +79,6 @@ public class LeadController {
         this.leadEmailSettingsService = leadEmailSettingsService;
         this.googleGmailApiService = googleGmailApiService;
         this.entityManager = entityManager;
-        this.leadServiceImpl = leadServiceImpl;
-        this.depensesServiceImpl = depensesServiceImpl;
     }
 
     @GetMapping("/show/{id}")
@@ -165,10 +159,8 @@ public class LeadController {
         if(user.isInactiveUser()) {
             return "error/account-inactive";
         }
-        List<Depenses> depenses = depensesServiceImpl.getDepensesNotInLeadOrTicket();
         populateModelAttributes(model, authentication, user);
         model.addAttribute("lead", new Lead());
-        model.addAttribute("depenses", depenses);
         return "lead/create-lead";
     }
 

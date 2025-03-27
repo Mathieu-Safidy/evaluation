@@ -6,4 +6,5 @@ import site.easy.to.build.crm.entity.LeadAction;
 
 @Repository
 public interface LeadActionRepository extends JpaRepository<LeadAction, Integer> {
+    public void deleteAll();
 }

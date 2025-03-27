@@ -3,6 +3,7 @@ package site.easy.to.build.crm.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.mapping.ToOne;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ticket_id")
-    private int ticketId;
+    private Integer ticketId;
 
     @Column(name = "subject")
     @NotBlank(message = "Subject is required")
@@ -33,17 +34,25 @@ public class Ticket {
 
     private String priority;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "manager_id")
     private User manager;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private User employee;
 
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "depenses_id")
+    private Depenses depenses;
+
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -66,7 +75,7 @@ public class Ticket {
         return ticketId;
     }
 
-    public void setTicketId(int ticketId) {
+    public void setTicketId(Integer ticketId) {
         this.ticketId = ticketId;
     }
 
@@ -132,5 +141,13 @@ public class Ticket {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Depenses getDepenses() {
+        return depenses;
+    }
+
+    public void setDepenses(Depenses depenses) {
+        this.depenses = depenses;
     }
 }
