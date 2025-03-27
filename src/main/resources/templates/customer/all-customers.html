@@ -81,6 +81,7 @@
                                 </h3><span th:text="${bindingResult.getFieldError('failedErrorMessage').defaultMessage}"></span>
                             </div>
                             <h4 class="card-title">Customers</h4>
+
                             <div class="table-responsive m-t-40">
                                 <table id="config-table" class="table display table-bordered table-striped no-wrap">
                                     <thead>
@@ -109,6 +110,7 @@
                                                     </button>
                                                 </form>
                                             </td>
+                                            <td ><a th:href="${home + 'employee/customer/duplicate/' + customer.customerId}">Dupliquer</a> </td>
                                         </tr>
                                     </tbody>
                                 </table>
