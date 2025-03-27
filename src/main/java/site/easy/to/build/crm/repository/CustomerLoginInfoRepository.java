@@ -9,4 +9,6 @@ public interface CustomerLoginInfoRepository extends JpaRepository<CustomerLogin
     public CustomerLoginInfo findByToken(String token);
 
     public CustomerLoginInfo findByUsername(String email);
+
+    
 }
